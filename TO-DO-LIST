@@ -1,0 +1,129 @@
+#include <iostream>
+#include<string>
+#include<vector>
+
+using namespace std;
+
+struct Task
+{
+   string des;      //description
+   bool Done;
+
+};
+
+class Todolist
+{
+    private:
+     
+    //vector stores tasks
+     vector<Task> tasks;
+
+     public:
+     void add_task(const string &des)
+     {
+
+        tasks.push_back({des,false});
+        cout<<"\t TASK ADDED SUCCESSFULLY !"<<endl;
+     }
+
+     void view_task()
+     {
+        if(tasks.empty())
+        {
+            cout<<"No tasks available !"<<endl;
+            return;
+        }
+        cout<<"Tasks:\n";
+        for(size_t i=0; i< tasks.size(); ++i)
+        {
+            cout<<i + 1 <<" "<<tasks[i].des<<"- ";
+            cout<<(tasks[i].Done ? "Completed ": "pending")<<endl;
+        }
+       
+
+     }
+
+     void task_Complete(size_t index)
+     {
+       if(index >= 1 && index <= tasks.size())
+       {
+        tasks[index - 1].Done = true;
+        cout<<"Task marked as completed: \n"<<endl;
+       }
+       else{
+        cout<<"INVALID TASK INDEX !!";
+       }
+     }
+
+     void remove_task(size_t index)
+     {
+        if(index >= 1 && index <= tasks.size())
+         {
+            tasks.erase(tasks.begin() + index - 1);
+            cout<<"TAsk removed !!"<<endl;
+         }
+         else
+         {
+            cout<<"INvalid task index \n";
+         }
+     }
+};
+
+int main()
+{
+  
+  Todolist todo;
+  int choice;
+  string taskdes;
+  size_t taskIndex;
+
+  while(true)
+  {
+    cout<<"------------------------------------------"<<endl;
+    cout<<"                TODOLIST                  "<<endl;
+    cout<<"------------------------------------------"<<endl;
+    cout<<"1. ADD TASK "<<endl;
+    cout<<"2. VIEW TASK "<<endl;
+    cout<<"3. MARK  COMPLETED  TASK "<<endl;
+    cout<<"4. REMOVE  TASK "<<endl;
+    cout<<"5. EXIT THE LIST "<<endl;
+    cout<<"Enter your Choice :  ";
+    cin>>choice;
+
+    switch(choice)
+    {
+        case 1:
+        cout<<"Enter Task Name : ";
+        cin.ignore();
+        getline(cin, taskdes);
+        todo.add_task(taskdes);
+        break;
+
+        case 2:
+        todo.view_task();
+        break;
+
+        case 3:
+        cout<<"Enter Task to mark as completed ";
+        cin>>taskIndex;
+        todo.task_Complete(taskIndex);
+        break;
+
+        case 4:
+        cout<<"Enter Task name to remove : ";
+        cin>>taskIndex;
+        todo.remove_task(taskIndex);
+        break;
+
+        case 5:
+        cout<<"Exiting programm !!!"<<endl;
+        return 0;
+
+        default:
+        cout<<"Invalid Choice ! sorry !!";
+    }
+
+  }
+
+return 0;
+}
